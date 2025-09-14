@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --background: 220 14% 96%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 217 91% 60%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96.1%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 91% 60%;
+  --radius: 0.5rem;
+  --font-default: 'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-default);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* Prose styles for markdown rendering */
+.prose {
+  color: hsl(var(--foreground));
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: hsl(var(--foreground));
+}
+.prose strong {
+  color: hsl(var(--foreground));
+}
+.prose a {
+  color: hsl(var(--primary));
+}
+.prose blockquote {
+  border-left-color: hsl(var(--border));
+  color: hsl(var(--muted-foreground));
+}
+.prose code {
+  color: hsl(var(--foreground));
+}
