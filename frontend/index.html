@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Checker & Customizer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8fafc;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .sidebar h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left-color: #ffd700;
+        }
+
+        .nav-link i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .content-panel {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #4a5568;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .file-upload:hover,
+        .file-upload.dragover {
+            border-color: #667eea;
+            background-color: rgba(102, 126, 234, 0.05);
+        }
+
+        .file-upload-icon {
+            font-size: 3rem;
+            color: #a0aec0;
+            margin-bottom: 1rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+
+        /* Score Display */
+        .score-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin: 1rem auto;
+        }
+
+        .score-excellent { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); }
+        .score-good { background: linear-gradient(135deg, #4fd1c7 0%, #319795 100%); }
+        .score-fair { background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%); }
+        .score-poor { background: linear-gradient(135deg, #fc8181 0%, #e53e3e 100%); }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        /* Lists */
+        .suggestion-list {
+            list-style: none;
+        }
+
+        .suggestion-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background-color: #f7fafc;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .improvement-item {
+            background-color: #f0fff4;
+            border-left-color: #48bb78;
+        }
+
+        /* Toggle Buttons */
+        .toggle-group {
+            display: flex;
+            background-color: #e2e8f0;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Loading States */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .mobile-menu-btn {
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 1001;
+                background-color: #667eea;
+                color: white;
+                border: none;
+                padding: 0.75rem;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+        }
+
+        /* Hide mobile menu button on desktop */
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <h1>AI Resume Checker</h1>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#resume-input" class="nav-link active" onclick="showPanel('resume-input', this)">
+                        <i class="fas fa-upload"></i>
+                        Resume Input
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analysis-result" class="nav-link" onclick="showPanel('analysis-result', this)">
+                        <i class="fas fa-chart-line"></i>
+                        Analysis Result
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#resume-output" class="nav-link" onclick="showPanel('resume-output', this)">
+                        <i class="fas fa-file-alt"></i>
+                        Resume Output
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#linkedin-optimizer" class="nav-link" onclick="showPanel('linkedin-optimizer', this)">
+                        <i class="fab fa-linkedin"></i>
+                        LinkedIn Optimizer
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Resume Input Panel -->
+            <div id="resume-input" class="content-panel active">
+                <div class="card">
+                    <h2>Resume Input</h2>
+                    <p>Upload your resume and provide additional information for analysis.</p>
+                    
+                    <div class="file-upload" id="fileUpload" onclick="document.getElementById('resumeFile').click()">
+                        <div class="file-upload-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p><strong>Click to upload</strong> or drag and drop your resume</p>
+                        <p>Supports PDF, DOCX, and TXT formats</p>
+                        <input type="file" id="resumeFile" style="display: none" accept=".pdf,.docx,.doc,.txt" onchange="handleFileSelect(this)">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-input" placeholder="Enter your full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="targetRole">Target Role</label>
+                        <input type="text" id="targetRole" class="form-input" placeholder="e.g., Software Engineer, Data Analyst">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="experienceLevel">Experience Level</label>
+                        <select id="experienceLevel" class="form-select">
+                            <option value="">Select experience level</option>
+                            <option value="entry">Entry Level (0-2 years)</option>
+                            <option value="mid">Mid Level (3-5 years)</option>
+                            <option value="senior">Senior Level (6+ years)</option>
+                            <option value="executive">Executive Level</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="tonePreference">Tone Preference</label>
+                        <select id="tonePreference" class="form-select">
+                            <option value="professional">Professional</option>
+                            <option value="casual">Casual</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="region">Region</label>
+                        <select id="region" class="form-select">
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="India">India</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="additionalKeywords">Additional Keywords</label>
+                        <input type="text" id="additionalKeywords" class="form-input" placeholder="Comma-separated keywords">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="analyzeResume()" id="analyzeBtn">
+                        <i class="fas fa-magic"></i>
+                        Analyze & Optimize Resume
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analysis Result Panel -->
+            <div id="analysis-result" class="content-panel">
+                <div class="card">
+                    <h2>Analysis Result</h2>
+                    
+                    <!-- ATS Score Section -->
+                    <div id="ats-score-section">
+                        <h3>ATS Score</h3>
+                        <div class="score-display" id="atsScoreDisplay">--</div>
+                        <p id="atsRating" style="text-align: center; font-weight: 500; margin-bottom: 2rem;">Upload a resume to see your ATS score</p>
+                        
+                        <div id="scoreBreakdown" style="display: none;">
+                            <h4>Score Breakdown:</h4>
+                            <div class="breakdown-item">
+                                <span>Keywords Match: </span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="keywordsProgress"></div>
+                                </div>
+                                <span id="keywordsScore">0%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Formatting/ATS Issues: </span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="formattingProgress"></div>
+                                </div>
+                                <span id="formattingScore">0%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Structure: </span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="structureProgress"></div>
+                                </div>
+                                <span id="structureScore">0%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Content Quality: </span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="contentProgress"></div>
+                                </div>
+                                <span id="contentScore">0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Extracted Fields -->
+                    <div id="extracted-fields" style="display: none;">
+                        <h3>Extracted Information</h3>
+                        <div id="extractedSkills"></div>
+                        <div id="extractedExperience"></div>
+                        <div id="extractedEducation"></div>
+                        <div id="extractedProjects"></div>
+                    </div>
+
+                    <!-- Missing Keywords -->
+                    <div id="missing-keywords" style="display: none;">
+                        <h3>Missing Keywords/Skills</h3>
+                        <div id="missingKeywordsList"></div>
+                    </div>
+
+                    <!-- Bullet Point Suggestions -->
+                    <div id="bullet-suggestions" style="display: none;">
+                        <h3>Suggested Bullet Rewrites</h3>
+                        <div id="bulletSuggestionsList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resume Output Panel -->
+            <div id="resume-output" class="content-panel">
+                <div class="card">
+                    <h2>Resume Output</h2>
+                    
+                    <div class="toggle-group">
+                        <button class="toggle-btn active" onclick="toggleResumeView('original', this)">Show Original</button>
+                        <button class="toggle-btn" onclick="toggleResumeView('optimized', this)">Show Optimized</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Tone</label>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" onclick="setTone('professional', this)">Professional</button>
+                            <button class="toggle-btn" onclick="setTone('casual', this)">Casual</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Region Formatting</label>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" onclick="setRegion('US', this)">US</button>
+                            <button class="toggle-btn" onclick="setRegion('UK', this)">UK</button>
+                            <button class="toggle-btn" onclick="setRegion('India', this)">India</button>
+                        </div>
+                    </div>
+
+                    <div id="resume-preview">
+                        <h3>Resume Preview</h3>
+                        <div id="resumePreviewContent" style="background: #f8f9fa; padding: 2rem; border-radius: 8px; white-space: pre-wrap; font-family: monospace;">
+                            Upload and analyze a resume to see the preview here.
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="downloadResume('pdf')" id="downloadPdfBtn">
+                            <i class="fas fa-download"></i>
+                            Download PDF
+                        </button>
+                        <button class="btn btn-secondary" onclick="downloadResume('docx')" id="downloadDocxBtn" style="margin-left: 1rem;">
+                            <i class="fas fa-download"></i>
+                            Download DOCX
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LinkedIn Optimizer Panel -->
+            <div id="linkedin-optimizer" class="content-panel">
+                <div class="card">
+                    <h2>LinkedIn Optimizer</h2>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="linkedinUrl">LinkedIn URL (Optional)</label>
+                        <input type="text" id="linkedinUrl" class="form-input" placeholder="https://linkedin.com/in/yourprofile">
+                    </div>
+
+                    <div id="linkedin-suggestions" style="display: none;">
+                        <h3>Optimized Headlines</h3>
+                        <div id="headlineOptions"></div>
+
+                        <h3>About Summary</h3>
+                        <div id="aboutSummary"></div>
+
+                        <h3>Suggested Skills to Add</h3>
+                        <div id="skillSuggestions"></div>
+
+                        <h3>Experience Highlights</h3>
+                        <div id="experienceHighlights"></div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="optimizeLinkedIn()" id="optimizeLinkedInBtn">
+                        <i class="fab fa-linkedin"></i>
+                        Generate LinkedIn Suggestions
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
