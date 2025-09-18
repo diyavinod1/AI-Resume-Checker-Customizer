@@ -1,0 +1,53 @@
+Senior Frontend Developer
+TechCorp Inc.
+San Francisco, CA
+
+We are looking for an experienced Senior Frontend Developer to join our growing engineering team. You will be responsible for building and maintaining our customer-facing web applications that serve millions of users worldwide.
+
+REQUIREMENTS:
+• Bachelor's degree in Computer Science, Engineering, or related field
+• 5+ years of professional software development experience
+• Expert-level proficiency in JavaScript, HTML5, and CSS3
+• Strong experience with modern JavaScript frameworks (React, Vue, or Angular)
+• Experience with state management libraries (Redux, Vuex, or NgRx)
+• Proficiency in TypeScript
+• Experience with RESTful APIs and GraphQL
+• Knowledge of responsive design principles and cross-browser compatibility
+• Familiarity with version control systems (Git)
+• Experience with build tools and bundlers (Webpack, Rollup, Vite)
+• Understanding of web performance optimization techniques
+• Experience with testing frameworks (Jest, Cypress, or similar)
+
+PREFERRED QUALIFICATIONS:
+• Experience with Node.js and server-side rendering
+• Knowledge of cloud platforms (AWS, GCP, or Azure)
+• Familiarity with containerization (Docker, Kubernetes)
+• Experience with CI/CD pipelines
+• Understanding of accessibility standards (WCAG)
+• Experience with design systems and component libraries
+• Knowledge of SEO best practices
+• Experience with analytics and monitoring tools
+
+RESPONSIBILITIES:
+• Design and develop high-quality, scalable web applications
+• Collaborate with UX/UI designers to implement pixel-perfect designs
+• Work closely with backend engineers to integrate APIs
+• Optimize applications for maximum speed and scalability
+• Ensure cross-browser compatibility and responsive design
+• Write clean, maintainable, and well-documented code
+• Participate in code reviews and provide constructive feedback
+• Mentor junior developers and share knowledge with the team
+• Stay up-to-date with emerging technologies and industry trends
+• Contribute to architectural decisions and technical planning
+
+WHAT WE OFFER:
+• Competitive salary range: $120,000 - $180,000
+• Comprehensive health, dental, and vision insurance
+• 401(k) with company matching
+• Flexible work-from-home policy
+• Professional development budget
+• Stock options
+• Unlimited PTO policy
+• Modern tech stack and latest tools
+
+Join our team and help us build the next generation of web applications that will impact millions of users around the world!
