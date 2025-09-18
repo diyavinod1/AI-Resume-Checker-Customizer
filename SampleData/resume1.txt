@@ -1,0 +1,55 @@
+SARAH JOHNSON
+Software Engineer
+sarah.johnson@email.com | (555) 123-4567 | linkedin.com/in/sarahjohnson
+
+PROFESSIONAL SUMMARY
+Experienced Software Engineer with 5+ years developing scalable web applications and microservices. Passionate about clean code, agile methodologies, and continuous learning.
+
+EXPERIENCE
+
+Senior Software Engineer | Google Inc. | San Francisco, CA | 2021 - Present
+• Developed and maintained high-traffic web applications serving 10M+ users daily
+• Led migration of legacy monolithic system to microservices architecture, reducing deployment time by 60%
+• Implemented automated testing strategies resulting in 40% reduction in production bugs
+• Collaborated with cross-functional teams including product managers, designers, and QA engineers
+• Mentored 3 junior developers and conducted technical interviews
+
+Software Engineer | Microsoft Corporation | Seattle, WA | 2019 - 2021
+• Built REST APIs using Node.js and Express.js for internal tools used by 500+ employees
+• Optimized database queries resulting in 30% performance improvement
+• Implemented CI/CD pipelines using Azure DevOps and Docker
+• Participated in agile development process with 2-week sprints
+• Contributed to open-source projects and internal documentation
+
+Junior Software Developer | StartupXYZ | Austin, TX | 2018 - 2019
+• Developed responsive web applications using React.js and Redux
+• Integrated third-party APIs including payment processing and authentication services
+• Wrote unit tests and participated in code reviews
+• Worked closely with UX designers to implement pixel-perfect designs
+
+EDUCATION
+Bachelor of Science in Computer Science
+University of Texas at Austin | Austin, TX | 2014 - 2018
+Relevant Coursework: Data Structures, Algorithms, Database Systems, Software Engineering
+
+TECHNICAL SKILLS
+Programming Languages: JavaScript, Python, Java, TypeScript, C++
+Web Technologies: React.js, Node.js, Express.js, HTML5, CSS3, Redux
+Databases: PostgreSQL, MongoDB, MySQL, Redis
+Cloud & DevOps: AWS, Azure, Docker, Kubernetes, Jenkins, Git
+Tools & Frameworks: Jest, Webpack, Babel, Agile/Scrum
+
+PROJECTS
+E-commerce Platform (2020)
+• Built full-stack e-commerce application using MERN stack
+• Implemented secure payment processing with Stripe API
+• Deployed on AWS with auto-scaling and load balancing
+
+Task Management App (2019)
+• Developed React-based task management application with real-time updates
+• Used Socket.io for real-time collaboration features
+• Implemented user authentication and authorization
+
+CERTIFICATIONS
+• AWS Certified Developer - Associate (2021)
+• Certified Scrum Master (2020)
